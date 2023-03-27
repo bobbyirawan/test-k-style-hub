@@ -93,8 +93,7 @@ func (a *adaptorMemberService) FindAll() (*dto.FindAllMemberResponse, error) {
 	var (
 		listMember = new([]entity.Members)
 		err        error
-		// member     = new(entity.Members)
-		res = new(dto.FindAllMemberResponse)
+		res        = new(dto.FindAllMemberResponse)
 	)
 
 	if listMember, err = a.memberRepo.FindAll(a.db); err != nil {

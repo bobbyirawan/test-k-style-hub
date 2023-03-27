@@ -25,6 +25,7 @@ func ConnectDB() (*gorm.DB, error) {
 		&entity.Members{},
 		&entity.Products{},
 		&entity.ReviewProducts{},
+		&entity.LikeReviews{},
 	)
 
 	return DB, nil

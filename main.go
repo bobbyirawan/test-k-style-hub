@@ -28,15 +28,34 @@ func main() {
 	e := echo.New()
 
 	memberRepo := repository.NewMemberRepository()
-	memberService := service.NewMemberService(db, memberRepo)
-	memberController := controller.NewMemberController(memberService)
+	productRepo := repository.NewProductRepository()
+	likeReviewRepo := repository.NewLikeReviewRepository()
 
-	route := e.Group("/member")
+	memberService := service.NewMemberService(db, memberRepo)
+	productService := service.NewProductService(productRepo, db)
+	likeReviewService := service.NewLikeReviewService(likeReviewRepo, db)
+
+	memberController := controller.NewMemberController(memberService)
+	productController := controller.NewProductController(productService)
+	LikeReviewController := controller.NewLikeReviewController(likeReviewService)
+
+	member := e.Group("/member")
 	{
-		route.POST("", memberController.Create)
-		route.PUT("/:id", memberController.Update)
-		route.DELETE("/:id", memberController.Delete)
-		route.GET("", memberController.FindAll)
+		member.POST("", memberController.Create)
+		member.PUT("/:id", memberController.Update)
+		member.DELETE("/:id", memberController.Delete)
+		member.GET("", memberController.FindAll)
+	}
+
+	product := e.Group("/product")
+	{
+		product.GET("", productController.FindByProductID)
+	}
+
+	like_review := e.Group("/like")
+	{
+		like_review.POST("", LikeReviewController.Create)
+		like_review.DELETE("/:id", LikeReviewController.Delete)
 	}
 
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))

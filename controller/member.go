@@ -78,5 +78,4 @@ func (m *MemberController) FindAll(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(200, res)
-
 }

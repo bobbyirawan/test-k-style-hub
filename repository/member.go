@@ -22,7 +22,7 @@ type MemberRepository interface {
 
 func (a *adaptorMemberRepository) FindAll(db *gorm.DB) (*[]entity.Members, error) {
 	member := new([]entity.Members)
-	if err := db.Preload("ListReview").Find(member).Error; err != nil {
+	if err := db.Find(member).Error; err != nil {
 		return nil, err
 	}
 	return member, nil
